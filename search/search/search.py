@@ -138,7 +138,11 @@ def uniformCostSearch(problem):
 
     queue = util.PriorityQueue()
     actions = []
-    queue.push((problem.getStartState(), actions), problem.costFn(problem.getStartState()))
+    # try:
+    #     costFn = problem.costFn
+    # except AttributeError:
+    #     costFn = lambda pos: problem.getCostOfActions()
+    queue.push((problem.getStartState(), actions), 0)
     visited = []
 
     while queue:
@@ -152,7 +156,7 @@ def uniformCostSearch(problem):
         
         for successor in problem.getSuccessors(pos):
             pos, dir, cost = successor
-            queue.push((pos, actions + [dir]), problem.costFn(pos))
+            queue.push((pos, actions + [dir]), problem.getCostOfActions(actions + [dir]))
 
     util.raiseNotDefined()
 
