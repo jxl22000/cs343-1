@@ -117,7 +117,7 @@ def breadthFirstSearch(problem):
     queue.push((problem.getStartState(), actions))
     visited = []
 
-    while not queue.isEmpty:
+    while queue:
         pos, actions = queue.pop()
         if pos in visited:
             continue
@@ -130,7 +130,7 @@ def breadthFirstSearch(problem):
             pos, dir, cost = successor
             queue.push((pos, actions + [dir]))
 
-    # util.raiseNotDefined()
+    util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
@@ -138,7 +138,7 @@ def uniformCostSearch(problem):
 
     queue = util.PriorityQueue()
     actions = []
-    queue.push((problem.getStartState(), actions), util.manhattanDistance(problem.getStartState(), problem.goal))
+    queue.push((problem.getStartState(), actions), problem.costFn(problem.getStartState()))
     visited = []
 
     while queue:
@@ -152,7 +152,7 @@ def uniformCostSearch(problem):
         
         for successor in problem.getSuccessors(pos):
             pos, dir, cost = successor
-            queue.push((pos, actions + [dir]), util.manhattanDistance(pos, problem.goal))
+            queue.push((pos, actions + [dir]), problem.costFn(pos))
 
     util.raiseNotDefined()
 
