@@ -138,10 +138,6 @@ def uniformCostSearch(problem):
 
     queue = util.PriorityQueue()
     actions = []
-    # try:
-    #     costFn = problem.costFn
-    # except AttributeError:
-    #     costFn = lambda pos: problem.getCostOfActions()
     queue.push((problem.getStartState(), actions), 0)
     visited = []
 
@@ -170,6 +166,27 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+
+    queue = util.PriorityQueue()
+    actions = []
+    total = 0
+    queue.push((problem.getStartState(), actions, total), 0)
+    visited = []
+
+    while queue:
+        pos, actions, total = queue.pop()
+        if pos in visited:
+            continue
+        visited.append(pos)
+
+        if problem.isGoalState(pos):
+            return actions
+        
+        for successor in problem.getSuccessors(pos):
+            pos, dir, cost = successor
+            
+            queue.push((pos, actions + [dir], total + cost), total + cost + heuristic(pos, problem))
+
     util.raiseNotDefined()
 
 
