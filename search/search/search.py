@@ -130,7 +130,7 @@ def breadthFirstSearch(problem):
             print("success")
             print(actions)
             return actions
-        
+
         for successor in problem.getSuccessors(state):
             next_state, dir, cost = successor
             # print(f"current: {state}, successor {successor}")

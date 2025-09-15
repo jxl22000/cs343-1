@@ -308,10 +308,10 @@ class CornersProblem(search.SearchProblem):
         "*** YOUR CODE HERE ***"
 
         # return all(self.corner_visits)
-        for corner in self.corner_visits:
+        for corner in state[1]:
             if not corner:
                 return False
-        return state[0] in self.corners
+        return True
         util.raiseNotDefined()
 
     def getSuccessors(self, state):
@@ -330,17 +330,19 @@ class CornersProblem(search.SearchProblem):
             # Add a successor state to the successor list if the action is legal
             # Here's a code snippet for figuring out whether a new position hits a wall:
             nextPos, cur_corners = state
+            deepCopy = [False, False, False, False]
+            for i in range(4):
+                deepCopy[i] = cur_corners[i]
             x, y = nextPos
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
             if not self.walls[nextx][nexty]:
                 nextPos = (nextx, nexty)
                 cost = 1
-
                 for i in range(4):
                     if self.corners[i] == nextPos:
-                        cur_corners[i] = True
-                nextState = (nextPos, cur_corners)
+                        deepCopy[i] = True
+                nextState = (nextPos, deepCopy)
                 successors.append( ( nextState, action, cost) )
 
             "*** YOUR CODE HERE ***"
