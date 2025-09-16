@@ -484,7 +484,15 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
+    food_list = foodGrid.asList()
+    if not food_list:
+        return 0
+    max_dist = 0
+    for food in food_list:
+        dist = mazeDistance(position, food, problem.startingGameState)
+        if dist > max_dist:
+            max_dist = dist
+    return max_dist
 
 class ClosestDotSearchAgent(SearchAgent):
     "Search for all food using a sequence of searches"
